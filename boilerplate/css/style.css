@@ -22,7 +22,8 @@
 }
 
 .chartBackground {
-    fill: #efe5dc;
+    fill: #c1121f;
+    opacity: 40%;
 }
 
 .chartFrame {
@@ -55,7 +56,7 @@
     padding: 2px;
     border: 1px solid  #313715;
     box-shadow: 2px 2px 4px #999;
-    background-color: #efe5dc;
+    background-color: #fff;
 }
 
 option {
@@ -103,4 +104,7 @@ option {
     color: #313715;
     font-weight: bold;
     margin: 7px;
+}
+.bar{
+    min-height: 100px;
 }

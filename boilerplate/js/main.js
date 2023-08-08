@@ -113,10 +113,10 @@
     //function to create color scale generator
     function makeColorScale(data) {
         var colorClasses = [
-            "#FFC599",
-            "#DA7E37",
-            "#A85311",
-            "#522500"
+            "#DEE2E6",
+            "#ADB5BD",
+            "#495057",
+            "#000000"
             //"#C2DFE3",
             // "#9DB4C0",
             //  "#5C6B73",
@@ -300,9 +300,9 @@
             })
             .transition() //add animation
             .delay(function (d, i) {
-                return i * 20;
+                return i * 100;
             })
-            .duration(500);
+            .duration(800);
 
         updateChart(bars, csvData.length, colorScale);
         
