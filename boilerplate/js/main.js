@@ -113,30 +113,36 @@
     //function to create color scale generator
     function makeColorScale(data) {
         var colorClasses = [
-           "#dee2e6",
+            "#dee2e6",
             "#ADB5BD",
-           "#495057",
-           "#000000"
-  
-
+            "#495057",
+            "#000000"
         ];
-
-        //create color scale generator
+    
+        // Create color scale generator
         var colorScale = d3.scaleQuantile()
             .range(colorClasses);
-
-        //build two-value array of minimum and maximum expressed attribute values
+    
+        // Build two-value array of minimum and maximum expressed attribute values
         var minmax = [
             d3.min(data, function (d) { return parseFloat(d[expressed]); }),
             d3.max(data, function (d) { return parseFloat(d[expressed]); })
         ];
-        //assign two-value array as scale domain
+    
+        // Check if 0 is in the data
+        if (minmax[0] > 0) {
+            minmax.unshift(0); // Add 0 to the beginning of the array
+        }
+    
+        // Assign the updated two-value array as the scale domain
         colorScale.domain(minmax);
-
+    
         return colorScale;
-    };
+    }
+    
     function setEnumerationUnits(blockGroups, map, path, colorScale) {
-        //add France regions to map --> do I need to have another enumeration unit?
+        // ...
+    
         var regions = map.selectAll(".regions")
             .data(blockGroups)
             .enter()
@@ -147,13 +153,9 @@
             .attr("d", path)
             .style("fill", function (d) {
                 var value = d.properties[expressed];
-                if (value) {
-                    return colorScale(d.properties[expressed]);
-                }
-                else if (d.properties.FID_1 == 277 || d.properties.FID_1 == 278) {
-                    return "#caf0f8"
-                }
-                else {
+                if (value !== null) {
+                    return colorScale(value);
+                } else {
                     return "#ccc";
                 }
             })
@@ -164,11 +166,10 @@
                 dehighlight(d.properties);
             })
             .on("mousemove", moveLabel);
-
-        var desc = regions.append("desc")
-            .text('{"stroke": "#000", "stroke-width": "0.5px"}')
-
+    
+        // ...
     };
+    
     //function to create coordinated bar chart
     function setChart(csvData, colorScale) {
 
