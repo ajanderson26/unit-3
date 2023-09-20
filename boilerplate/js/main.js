@@ -3,7 +3,7 @@
 
     //pseudo-global variables
     var attrArray = ["all_occurances", "01_occur", "c2to3", "c4to9", "c10plus"];
-    var expressed = attrArray[1];
+    var expressed = attrArray[0];
 
     var chartWidth = window.innerWidth * 0.45,
         chartHeight = 473,
@@ -113,14 +113,14 @@
     //function to create color scale generator
     function makeColorScale(data) {
         var colorClasses = [
-            "#ffffff",
-            "#ADB5BD",
-            "#495057",
-            "#000000"
-            //"#C2DFE3",
-            // "#9DB4C0",
-            //  "#5C6B73",
-            //  "#253237",
+          //  "#dee2e6",
+          //  "#ADB5BD",
+          //  "#495057",
+          //  "#000000"
+            "#C2DFE3",
+             "#9DB4C0",
+              "#5C6B73",
+              "#253237",
 
         ];
 
