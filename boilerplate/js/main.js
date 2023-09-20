@@ -139,7 +139,8 @@
     
     
     function setEnumerationUnits(blockGroups, map, path, colorScale) {
-        //add France regions to map --> do I need to have another enumeration unit?
+        // ...
+    
         var regions = map.selectAll(".regions")
             .data(blockGroups)
             .enter()
@@ -150,13 +151,14 @@
             .attr("d", path)
             .style("fill", function (d) {
                 var value = d.properties[expressed];
-                if (value) {
-                    return colorScale(d.properties[expressed]);
-                }
-                else if (d.properties.FID_1 == 277 || d.properties.FID_1 == 278) {
-                    return "#caf0f8"
-                }
-                else {
+                if (value === 0) {
+                    // Handle the case when the value is 0
+                    return colorScale(0);
+                } else if (value) {
+                    return colorScale(value);
+                } else if (d.properties.FID_1 == 277 || d.properties.FID_1 == 278) {
+                    return "#caf0f8";
+                } else {
                     return "#ccc";
                 }
             })
@@ -167,10 +169,8 @@
                 dehighlight(d.properties);
             })
             .on("mousemove", moveLabel);
-
-        var desc = regions.append("desc")
-            .text('{"stroke": "#000", "stroke-width": "0.5px"}')
-
+    
+        // ...
     };
     //function to create coordinated bar chart
     function setChart(csvData, colorScale) {
