@@ -110,34 +110,34 @@
     }
 
 
-    //function to create color scale generator
     function makeColorScale(data) {
         var colorClasses = [
-          //  "#dee2e6",
-          //  "#ADB5BD",
-          //  "#495057",
-          //  "#000000"
-            "#C2DFE3",
-             "#9DB4C0",
-              "#5C6B73",
-              "#253237",
-
+            "#dee2e6",
+            "#ADB5BD",
+            "#495057",
+            "#000000"
         ];
-
-        //create color scale generator
-        var colorScale = d3.scaleQuantile()
-            .range(colorClasses);
-
-        //build two-value array of minimum and maximum expressed attribute values
+    
+        // Ensure that the color scale includes 0 in the domain
         var minmax = [
             d3.min(data, function (d) { return parseFloat(d[expressed]); }),
             d3.max(data, function (d) { return parseFloat(d[expressed]); })
         ];
-        //assign two-value array as scale domain
-        colorScale.domain(minmax);
-
+        
+        // Check if the minimum value is greater than 0, and if so, set the minimum to 0
+        if (minmax[0] > 0) {
+            minmax[0] = 0;
+        }
+    
+        // Create color scale with updated domain
+        var colorScale = d3.scaleQuantile()
+            .range(colorClasses)
+            .domain(minmax);
+    
         return colorScale;
-    };
+    }
+    
+    
     function setEnumerationUnits(blockGroups, map, path, colorScale) {
         //add France regions to map --> do I need to have another enumeration unit?
         var regions = map.selectAll(".regions")
