@@ -110,37 +110,33 @@
     }
 
 
+    //function to create color scale generator
     function makeColorScale(data) {
         var colorClasses = [
-            "#dee2e6",
-            "#ADB5BD",
-            "#495057",
-            "#000000"
+           "#dee2e6",
+          "#ADB5BD",
+           "#495057",
+           "#000000"
+  
+
         ];
-    
-        // Ensure that the color scale includes 0 in the domain
+
+        //create color scale generator
+        var colorScale = d3.scaleQuantile()
+            .range(colorClasses);
+
+        //build two-value array of minimum and maximum expressed attribute values
         var minmax = [
             d3.min(data, function (d) { return parseFloat(d[expressed]); }),
             d3.max(data, function (d) { return parseFloat(d[expressed]); })
         ];
-        
-        // Check if the minimum value is greater than 0, and if so, set the minimum to 0
-        if (minmax[0] > 0) {
-            minmax[0] = 0;
-        }
-    
-        // Create color scale with updated domain
-        var colorScale = d3.scaleQuantile()
-            .range(colorClasses)
-            .domain(minmax);
-    
+        //assign two-value array as scale domain
+        colorScale.domain(minmax);
+
         return colorScale;
-    }
-    
-    
+    };
     function setEnumerationUnits(blockGroups, map, path, colorScale) {
-        // ...
-    
+        //add France regions to map --> do I need to have another enumeration unit?
         var regions = map.selectAll(".regions")
             .data(blockGroups)
             .enter()
@@ -153,12 +149,12 @@
                 var value = d.properties[expressed];
                 if (value === 0) {
                     // Handle the case when the value is 0
-                    return colorScale(0);
-                } else if (value) {
-                    return colorScale(value);
-                } else if (d.properties.FID_1 == 277 || d.properties.FID_1 == 278) {
-                    return "#caf0f8";
-                } else {
+                    return colorScale(0);}
+                    
+                else if (d.properties.FID_1 == 277 || d.properties.FID_1 == 278) {
+                    return "#caf0f8"
+                }
+                else {
                     return "#ccc";
                 }
             })
@@ -169,8 +165,10 @@
                 dehighlight(d.properties);
             })
             .on("mousemove", moveLabel);
-    
-        // ...
+
+        var desc = regions.append("desc")
+            .text('{"stroke": "#000", "stroke-width": "0.5px"}')
+
     };
     //function to create coordinated bar chart
     function setChart(csvData, colorScale) {
